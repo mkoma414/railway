@@ -10,12 +10,9 @@
 #   https://dev.mysql.com/doc/refman/5.7/en/password-hashing.html
 #
 default: &default
+  url: <%= ENV['DATABASE_URL'] %>
   adapter: mysql2
-  encoding: utf8mb4
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: root
-  password:
-  socket: /tmp/mysql.sock
+  timeout: 5000
 
 development:
   <<: *default
@@ -50,6 +47,6 @@ test:
 #
 production:
   <<: *default
-  database: test_app_production
-  username: test_app
-  password: <%= ENV["TEST_APP_DATABASE_PASSWORD"] %>
+  url: <%= ENV['DATABASE_URL'] %>
+  adapter: mysql2
+  timeout: 5000
